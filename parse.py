@@ -1,14 +1,15 @@
 import bs4
+import csv
 
 def get_items_list(items):
     
     for item in items:
 
-        author = item.find('span', class_='author_list').text
         title = item.find('span', class_='title_list').text
+        author = item.find('span', class_='author_list').text.replace('. ','.')
         year = item.find('span', class_='book_year').text
 
-        yield author, title, year
+        yield title, author, year
 
 def get_links_list(links):
 
@@ -38,8 +39,13 @@ def InsertBooksList():
         except Exception as ex:
             pass
         finally:
-            print(f'{row[0][0]} | {row[0][1]} | {row[0][2]} | {row[1][0]}')
-            print(f'{type(row[0][0])} | {type(row[0][1])} | {type(row[0][2])} | {type(row[1][0])}')
+            # print(f'{row[0][0]} | {row[0][1]} | {row[0][2]} | {row[1][0]}')
+            # print(f'{type(row[0][0])} | {type(row[0][1])} | {type(row[0][2])} | {type(row[1][0])}')
+            with open('result.csv', mode='w', encoding='utf-8') as w_file:
+                file_writer = csv.writer(w_file, delimiter=',', lineterminator='\r')
+                file_writer.writerow([1, row[0][0], row[0][1], row[0][2], row[1][0]])
+
+
 
 
 if __name__ == "__main__":
