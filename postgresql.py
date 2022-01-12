@@ -3,14 +3,6 @@ import psycopg2
 from psycopg2 import Error
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 import csv
-
-def get_row():
-
-    with open('result.csv', encoding='utf-8') as file:
-        
-        src = csv.reader(file, delimiter=',')
-        for row in src:
-                pass
                 
 def insertToPostgreSQL():
     try:
@@ -18,6 +10,12 @@ def insertToPostgreSQL():
             connection.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
             with connection.cursor() as cursor:
                 
+                delete_query = """DELETE FROM books;"""
+                cursor.execute(delete_query)
+
+                alter_query = """ALTER SEQUENCE books_id_seq RESTART WITH 1;"""
+                cursor.execute(alter_query)
+
                 with open('result.csv', encoding='utf-8') as file:
                     
                     src = csv.reader(file,delimiter=',')
