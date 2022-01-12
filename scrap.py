@@ -1,10 +1,10 @@
 import requests
 import bs4
 
-url = "http://militera.lib.ru/1/cats/all/sch/index.html"
-
 def scrapWeb():
-    
+
+    url = "http://militera.lib.ru/1/cats/all/a/index.html"
+
     response = requests.get(url)
 
     soup = str(bs4.BeautifulSoup(response.text, "lxml"))
